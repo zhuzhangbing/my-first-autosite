@@ -1,0 +1,29 @@
+name: 自动部署我的网页
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    
+    steps:
+      - name: 获取代码
+        uses: actions/checkout@v4
+      
+      - name: 准备部署
+        uses: actions/configure-pages@v4
+      
+      - name: 上传成品
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      
+      - name: 发布到GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
